@@ -22,6 +22,7 @@
           - tmux
           - vim
           - zsh
+          - bc
 
     - name: pip install
       become: yes
