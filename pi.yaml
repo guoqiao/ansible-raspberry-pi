@@ -1,0 +1,39 @@
+#!/usr/bin/env ansible-playbook
+
+- name: setup pi
+  hosts: pi
+  tasks:
+    - name: apt install
+      become: yes
+      apt:
+        update_cache: yes
+        name:
+          - libraspberrypi-bin
+          - python3-dev
+          - python3-pip
+          - python3-venv
+          - lm-sensors
+          - sysstat
+          - rsync
+          - htop
+          - tree
+          - wget
+          - curl
+          - tmux
+          - vim
+          - zsh
+
+    - name: pip install
+      become: yes
+      pip:
+        executable: pip3
+        state: latest
+        name:
+          - pip
+          - wheel
+          - vcgencmd
+
+    - name: sync files to remote
+      synchronize:
+        src: "{{ playbook_dir }}/bin/"
+        dest: bin/
